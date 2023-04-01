@@ -7,11 +7,11 @@ class BaseApi:
         """
         Use this method to send the get request
         :param url: The request URL
-        :param params: The request params(OPTIONAL)
-        :param headers: The request headers(OPTIONAL)
+        :param headers: The request params(OPTIONAL)
+        :param params: The request headers(OPTIONAL)
         :return: response
         """
-        response = requests.get(url, headers=headers, params=params, verify=False)
+        response = requests.get(url, headers=headers, params=params)
         return response
 
     def post_request(self, url, json, headers, params=None):
@@ -19,26 +19,26 @@ class BaseApi:
         Use this method to send post request
         :param url: The request URL
         :param json: Request body format
-        :param params: The request params(OPTIONAL)
         :param headers: The request headers(OPTIONAL)
+        :param params: The request params(OPTIONAL)
         :return: response
         """
 
         response = requests.post(url, data=json, params=params, headers=headers, verify=False)
         return response
 
-    def put_request(self, url, json, *kwargs):
+    def put_request(self, url, json, headers, params):
 
         """"
         Use this method to send put request
         :param url: The request URL
         :param json: Request body format
-        :param params: The request params(OPTIONAL)
-        :param headers: The request headers(OPTIONAL)
+        :param headers: The request params(OPTIONAL)
+        :param params: The request headers(OPTIONAL)
         :return: response
         """
 
-        response = requests.put(url, json, params=kwargs[1], headers=kwargs[0], verify=False)
+        response = requests.put(url, json, headers=headers, params=params, verify=False)
         return response
 
     def delete_request(self, url, *kwargs):
@@ -61,6 +61,13 @@ class BaseApi:
         """
 
         return response.status_code == expected_status_code
+
+    def get_auth_headers(self, access_token):
+        headers = {
+            'Authorization': f'Bearer {access_token}',
+            'Content-Type': 'application/json'
+        }
+        return headers
 
 
 

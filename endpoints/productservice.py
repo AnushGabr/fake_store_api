@@ -16,9 +16,9 @@ class ProductService(BaseApi):
 
         return len(json_data)
 
-    #checking
-    def update_product(self, url, token, id):
-        response = self.put_request(url + self.products_endpoint, {"title": "test product",
-    "price": 13.5,},token, id)
+
+
+
+
 
 
