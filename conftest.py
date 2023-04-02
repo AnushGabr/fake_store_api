@@ -1,6 +1,7 @@
 import pytest
-
+import requests
 from config import Config
+import json
 
 
 def pytest_addoption(parser):
@@ -20,7 +21,11 @@ def env(request):
 @pytest.fixture(scope='session')
 def authentication_login(env):
     login_info = Config(env)
-    return login_info.user_login
+    login_info_dict = login_info.user_login
+    access_token_text = requests.post('https://fakestoreapi.com/auth/login', login_info_dict).text
+    access_token_json = json.loads(access_token_text)
+
+    return access_token_json['token']
 
 
 @pytest.fixture(scope='session')
