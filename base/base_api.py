@@ -27,7 +27,7 @@ class BaseApi:
         response = requests.post(url, data=json, params=params, headers=headers, verify=False)
         return response
 
-    def put_request(self, url, json, headers, params):
+    def put_request(self, url, json, headers=None, params=None):
 
         """"
         Use this method to send put request
@@ -62,10 +62,10 @@ class BaseApi:
 
         return response.status_code == expected_status_code
 
-    def get_auth_headers(self, access_token):
+    def get_auth_headers(self, host, access_token):
         headers = {
-            'Authorization': f'Bearer {access_token}',
-            'Content-Type': 'application/json'
+            "Host": host[8:],
+            'Authorization': f'Bearer {access_token}'
         }
         return headers
 
