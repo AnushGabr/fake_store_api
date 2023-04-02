@@ -16,6 +16,11 @@ class ProductService(BaseApi):
 
         return len(json_data)
 
+    def create_new_product(self, url, json, token):
+        response = self.post_request(url + self.products_endpoint, json, token)
+
+        return response
+
     def update_product(self, url, product_id, json_for_update, headers):
         """
 

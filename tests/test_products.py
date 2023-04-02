@@ -1,10 +1,14 @@
 from endpoints.productservice import ProductService
 from json_models import create_json_model as model
 
-def test_product(app_config):
-    product_service = ProductService()
 
-    assert product_service.get_products(app_config.base_url, app_config.token)
+def test_is_all_products_were_taken(app_config):
+    product_service = ProductService()
+    headers = product_service.get_auth_headers(app_config.base_url, app_config.token)
+    response = product_service.get_products(app_config.base_url, headers)
+
+    assert product_service.check_products_data_by_length(response) == 20
+    assert product_service.check_status_code(response, 200)
 
 
 def test_update_product(app_config):
@@ -21,6 +25,7 @@ def test_update_product(app_config):
     assert product_service.check_status_code(response, 200)
     assert product_service.check_response_body_key(response, json_for_update, "title")
     assert product_service.is_product_entirely_updated(response, json_for_update)
+
 
 def test_delete_product(app_config):
     product_service = ProductService()
