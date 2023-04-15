@@ -1,10 +1,35 @@
+import json
+
 from endpoints.productservice import ProductService
-from json_models import create_json_model as model
+from json_models import create_json_model as model, create_json_model
+
 
 def test_product(app_config):
     product_service = ProductService()
 
     assert product_service.get_products(app_config.base_url, app_config.token)
+
+
+def test_get_in_category(app_config):
+    product_service = ProductService()
+    #category = "jewelery"
+    response = product_service.get_products_by_category(app_config.base_url)
+
+    products = json.loads(response.text)
+    print(products, response.text)
+    assert response.status_code == 200
+    assert len(products) > 0
+    assert products["category"] == "jewelery"
+
+
+def test_create_product(app_config):
+    product_service = ProductService()
+
+    new_prod = create_json_model.create_product_json('test product', 13.5, 'lorem ipsum set', 'https://i.pravatar.cc', 'electronic')
+    created_prod = product_service.create_new_product(app_config.base_url, new_prod)
+    print(new_prod,  created_prod)
+    assert product_service.check_status_code(created_prod, 200)
+
 
 
 def test_update_product(app_config):

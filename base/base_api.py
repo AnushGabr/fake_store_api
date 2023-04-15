@@ -3,7 +3,7 @@ import requests
 
 class BaseApi:
 
-    def get_request(self, url, headers, params=None):
+    def get_request(self, url, headers=None, params=None):
         """
         Use this method to send the get request
         :param url: The request URL
@@ -14,7 +14,7 @@ class BaseApi:
         response = requests.get(url, headers=headers, params=params)
         return response
 
-    def post_request(self, url, json, headers, params=None):
+    def post_request(self, url, json, headers=None, params=None):
         """
         Use this method to send post request
         :param url: The request URL

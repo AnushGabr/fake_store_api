@@ -5,10 +5,20 @@ from base.base_api import BaseApi
 
 class ProductService(BaseApi):
     products_endpoint = '/products'
-
+    category_endpoint = "/products/category/jewelery"
     def get_products(self, url, token):
-        response = self.get_request(url + self.products_endpoint, token)
+        response = self.get_request(url + self.products_endpoint)
 
+        return response
+
+    def get_products_by_category(self, url):
+        endpoint = self.category_endpoint
+        response = self.get_request(url + endpoint)
+        return response
+
+    def create_new_product(self, url, json):
+        response = self.post_request(url + self.products_endpoint, json)
+        #self.check_status_code(response, 201)
         return response
 
     def check_products_data_by_length(self, data):
