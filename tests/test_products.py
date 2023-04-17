@@ -58,4 +58,4 @@ def test_delete_product(app_config):
     response = product_service.delete_product(app_config.base_url, 6, headers)
     assert product_service.check_status_code(response, 200)
     assert product_service.check_response_time_in_seconds(response, 1)
-    # The actual product is not deleted from the DB, that's why we can't further check the deletion.
+

@@ -26,14 +26,4 @@ def update_product(title, price, description, image, category):
 
     return data
 
-# def update_product_single_data(title=None, price=None, description=None, image=None, category=None):
-#
-#     data = {
-#         'title': title,
-#         'price': price,
-#         'description': description,
-#         'image': image,
-#         'category': category
-#     }
-#
-#     return data
+
