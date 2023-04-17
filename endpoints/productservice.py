@@ -4,12 +4,32 @@ from base.base_api import BaseApi
 
 
 class ProductService(BaseApi):
-    products_endpoint = '/products'
+    PRODUCTS_ENDPOINT = '/products'
 
     def get_products(self, url, token):
-        response = self.get_request(url + self.products_endpoint, token)
+        response = self.get_request(url + self.PRODUCTS_ENDPOINT, token)
 
         return response
+
+    def create_product(self, url, json, token):
+        response = self.post_request(url + self.PRODUCTS_ENDPOINT, json, token)
+
+        return response
+
+    def get_single_product(self, url, token, id):
+        response = self.get_request(url + self.PRODUCTS_ENDPOINT + id, token)
+        product = response.json()
+
+        return product["id"]
+
+    def get_limit_results(self, url, token, id):
+        products_ids = []
+        response = self.get_request(url + self.PRODUCTS_ENDPOINT + id, token)
+        limited_products = response.json()
+        for product in limited_products:
+            products_ids.append(product["id"])
+
+        return products_ids
 
     def check_products_data_by_length(self, data):
         json_data = json.loads(data.text)
@@ -17,7 +37,7 @@ class ProductService(BaseApi):
         return len(json_data)
 
     def create_new_product(self, url, json, token):
-        response = self.post_request(url + self.products_endpoint, json, token)
+        response = self.post_request(url + self.PRODUCTS_ENDPOINT, json, token)
 
         return response
 
@@ -30,7 +50,7 @@ class ProductService(BaseApi):
         :param headers: The headers that must have two keys; Host and Authorization.
         :return: Returns the response.
         """
-        response = self.put_request(url+self.products_endpoint+"/"+str(product_id), json_for_update, headers)
+        response = self.put_request(url + self.PRODUCTS_ENDPOINT + "/" + str(product_id), json_for_update, headers)
         return response
 
     def check_response_body_key(self, response, json_for_update, key):
@@ -65,5 +85,5 @@ class ProductService(BaseApi):
         :param headers: The headers that must have two keys; Host and Authorization.
         :return: Returns the response.
         """
-        response = self.delete_request(url+self.products_endpoint+"/"+str(product_id), headers)
+        response = self.delete_request(url + self.PRODUCTS_ENDPOINT + "/" + str(product_id), headers)
         return response
