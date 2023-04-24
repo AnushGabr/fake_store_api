@@ -5,6 +5,9 @@ from base.base_api import BaseApi
 
 class ProductService(BaseApi):
     PRODUCTS_ENDPOINT = '/products'
+    sorted_product_endpoint_desc = '/products?sort=desc'
+    sorted_product_endpoint_asc = '/products?sort=asc'
+    all_categories_endpoint = '/products/categories'
 
     def get_products(self, url, token):
         response = self.get_request(url + self.PRODUCTS_ENDPOINT, token)
@@ -87,3 +90,34 @@ class ProductService(BaseApi):
         """
         response = self.delete_request(url + self.PRODUCTS_ENDPOINT + "/" + str(product_id), headers)
         return response
+
+
+
+
+    def sort_by_descending(self, url, token):
+        ides = []
+        response = self.get_request(url + self.sorted_product_endpoint_desc, token)
+        products = response.json()
+        for product in products:
+            ides.append(product["id"])
+
+        sorted_ides = sorted(ides, reverse=True)
+        return sorted_ides == ides
+
+
+    def sort_by_ascending(self, url, token):
+        ides = []
+        response = self.get_request(url + self.sorted_product_endpoint_asc, token)
+        products = response.json()
+        for product in products:
+            ides.append(product["id"])
+
+        sorted_prices = sorted(ides)
+        return sorted_prices
+
+
+
+    def get_all_requests(self, url, token):
+        request = self.get_request(url + self.all_categories_endpoint, token)
+        categories = request.json()
+        return len(categories) == 4

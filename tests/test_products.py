@@ -59,3 +59,20 @@ def test_delete_product(app_config):
     assert product_service.check_status_code(response, 200)
     assert product_service.check_response_time_in_seconds(response, 1)
 
+
+def test_sort_result_descending(app_config):
+    product_service = ProductService()
+    headers = product_service.get_auth_headers(app_config.base_url, app_config.token)
+    assert product_service.sort_by_descending(app_config.base_url, headers)
+
+
+def test_sort_ascending(app_config):
+    product_service = ProductService()
+    headers = product_service.get_auth_headers(app_config.base_url, app_config.token)
+    assert product_service.sort_by_ascending(app_config.base_url, headers)
+
+
+def test_all_categories(app_config):
+    product_service = ProductService()
+    headers = product_service.get_auth_headers(app_config.base_url, app_config.token)
+    assert product_service.get_all_requests(app_config.base_url, headers)
